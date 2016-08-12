@@ -1,0 +1,28 @@
+﻿@using ClubWebSite.Helpers
+@model ClubWebSite.Models.Club
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@if (Model == null)
+{
+    <div>
+        Empty
+    </div>
+}
+else
+{
+
+    <div>
+        @Model.Name
+    </div>
+    <div>
+        @Model.Address
+    </div>
+    <div>
+        <img src="~/Content/images/uploads/@Model.Pics.Single(p => p.IsDefault).FileName"/>
+    </div>
+}
+
