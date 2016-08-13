@@ -1,31 +1,59 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@using ClubWebSite.Helpers
+@using ClubWebSite.Models
+@model ClubWebSite.Models.Club
+@{
+    ViewBag.Title = Model == null ? "Home Page" : @Model.Name;
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
+@if (Model == null)
+{
+    <div class="jumbotron">
+        <h1>Welcome!</h1>
+        <p class="lead">
+            Start by defining club info @Html.ActionLink("here", "Save", "Club")
         </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+}
+else
+{
+    <div class="jumbotron">
+        <h1>Welcome To Club @Model.Name</h1>
+        <p class="lead">
+            @Model.Description
+        </p>
+
+        <div class="address">
+            <i class="glyphicon glyphicon-map-marker"></i>
+            @Model.Address
+        </div>
+        @*<p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>*@
     </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+
+    @*<h2 class="text-center">
+            Welcome To Club @Model.Name
+        </h2>
+        <div class="desc">
+            @Model.Description
+        </div>
+        <div class="address">
+            <i class="glyphicon glyphicon-map-marker"></i>
+            @Model.Address
+        </div>*@
+    if (@Model.Pics.SingleOrDefault(p => p.IsDefault) != null)
+    {
+        <div>
+            <img class="img-default" src="~/Content/images/uploads/@Model.Pics.Single(p => p.IsDefault).FileName"/>
+        </div>
+    }
+
+    <div class="div-img">
+        @foreach (Pic pic in Model.Pics.Where(p => !p.IsDefault && p.IsActivated).OrderBy(p => p.DisplayOrder))
+        {
+            <div class="col-sm-4">
+                <img class="img-list" src="~/Content/images/uploads/@pic.FileName" />
+            </div>
+        }
     </div>
-</div>
+}
+

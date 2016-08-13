@@ -91,7 +91,7 @@ body {
 }
 
 .img-list {
-      width: 200px;
+    width: 300px;
     height: 200px;
     margin: 0 10px 10px 0;
 }
@@ -102,20 +102,6 @@ body {
 
 .address {
     margin-bottom: 30px;
+    font-style: italic;
 }
-
-/*.activation {
-    cursor: pointer;
-    font-size: 30px;
-}
-
-.default {
-    cursor: pointer;
-    font-size: 30px;  
-}
-
-.delete {
-     cursor: pointer;
-    font-size: 30px; 
-}*/
 

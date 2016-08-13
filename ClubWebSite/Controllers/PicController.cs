@@ -13,12 +13,21 @@ namespace ClubWebSite.Controllers
     public class PicController : Controller
     {
         
-        public ActionResult Index(int id)
+        public ActionResult Index()
         {
             ClubDbContext dbContext = new ClubDbContext();
-            var pics = GetPics(dbContext, id);
-            ViewBag.ClubId = id;
-            return View(pics);
+            var club = dbContext.Clubs.FirstOrDefault();
+            if (club == null)
+            {
+                ViewBag.ClubId = 0;
+                return View(new List<Pic>());
+            }
+            else
+            {
+                var pics = GetPics(dbContext, club.Id);
+                ViewBag.ClubId = club.Id;
+                return View(pics);
+            }
         }
    
 

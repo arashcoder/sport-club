@@ -12,14 +12,7 @@ namespace ClubWebSite.Controllers
 {
     public class ClubController : Controller
     {
-        // GET: Club
-        public ActionResult Index()
-        {
-            ClubDbContext dbContext = new ClubDbContext();
-            var club = dbContext.Clubs.FirstOrDefault();
-            return View(club);
-        }
-
+     
         public ActionResult Save()
         {
             ClubDbContext dbContext = new ClubDbContext();
@@ -30,28 +23,30 @@ namespace ClubWebSite.Controllers
         [HttpPost]
         public ActionResult Save(Club club)
         {
-            var newClub = new Club();
-            ClubDbContext dbContext = new ClubDbContext();
-            if (club.Id > 0)
-            {
-                var existingclub = dbContext.Clubs.SingleOrDefault(c => c.Id == club.Id);
-                if (existingclub != null)
+          
+                var newClub = new Club();
+                ClubDbContext dbContext = new ClubDbContext();
+                if (club.Id > 0)
                 {
-                    existingclub.Name = club.Name;
-                    existingclub.Address = club.Address;
-                    existingclub.Description = club.Description;
+                    var existingclub = dbContext.Clubs.SingleOrDefault(c => c.Id == club.Id);
+                    if (existingclub != null)
+                    {
+                        existingclub.Name = club.Name;
+                        existingclub.Address = club.Address;
+                        existingclub.Description = club.Description;
+                    }
                 }
-            }
-            else
-            {               
-                newClub.Address = club.Address;
-                newClub.Name = club.Name;
-                newClub.Description = club.Description;
-                dbContext.Clubs.Add(newClub);
-            }
-            dbContext.SaveChanges();
+                else
+                {
+                    newClub.Address = club.Address;
+                    newClub.Name = club.Name;
+                    newClub.Description = club.Description;
+                    dbContext.Clubs.Add(newClub);
+                }
+                dbContext.SaveChanges();
+
+                return RedirectToAction("Index", "Pic");
            
-            return RedirectToAction("Index", "Pic", new {id = club.Id>0 ? club.Id : newClub.Id});
         }
 
     }

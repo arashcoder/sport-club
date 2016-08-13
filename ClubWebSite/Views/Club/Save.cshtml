@@ -1,21 +1,22 @@
-﻿@model ClubWebSite.Models.Club
+﻿@using System.Web.UI.WebControls
+@model ClubWebSite.Models.Club
 
 @{
     ViewBag.Title = "Save Club";
 }
 
-<h2>Create</h2>
+<h2>Save Club Info</h2>
 
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
-
+    @Html.HiddenFor(model => model.Id)
     <div>
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label" })
             <div>
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder="Name of the club" } })
                 @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -23,7 +24,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Address, htmlAttributes: new {@class = "control-label"})
             <div>
-                @Html.EditorFor(model => model.Address, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.EditorFor(model => model.Address, new {htmlAttributes = new {@class = "form-control", Placeholder="Address of the club"}})
                 @Html.ValidationMessageFor(model => model.Address, "", new {@class = "text-danger"})
             </div>
         </div>
@@ -31,14 +32,14 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label" })
             <div>
-               @Html.TextAreaFor(model => model.Description, new { cols = 10, @rows = 3, @class = "form-control" })
+               @Html.TextAreaFor(model => model.Description, new { cols = 10, @rows = 3, @class = "form-control", placeholder="Some background info about the club" })
                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-10">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </div>
     </div>

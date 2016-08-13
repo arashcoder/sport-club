@@ -1,74 +1,88 @@
 ﻿@model IEnumerable<ClubWebSite.Models.Pic>
 
 @{
-    ViewBag.Title = "Pic";
+    ViewBag.Title = "Club Images";
 }
 
-<h2>Upload a pic</h2>
 
-
-@using (Html.BeginForm("UpLoadImage", "Pic", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@if (ViewBag.ClubId == 0)
 {
-    <input type="hidden" value="@ViewBag.ClubId" id="clubId" name="clubId" />
-
-    <div class="form-group">
-        <div>
-            <input type="file" name="file" data-input="false" data-buttontext="Select a pic." />
-            &nbsp;&nbsp;&nbsp;
-        </div>
-        <div>
-            <input type="submit" value="Upload" name="Command" class="btn btn-primary" />
-        </div>
-    </div>
+    <p>
+        You have not defined club info yet. start @Html.ActionLink("here", "Save", "Club").
+    </p>
 }
 
-@if (@Model.Any())
-{
-    <table id="pic-table" class="table table-striped">
-        <thead>
-        <tr>
-            <th  class="text-center">
-                Display Order
-            </th>
-            <th  class="text-center">
-                Image
-            </th>
-            <th class="text-center">
-                Actions
-            </th>
-        </tr>
-        </thead>
 
-        <tbody data-order-url="@Url.Action("UpdateDisplayOrders", "Pic")">
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td class="index text-center" data-id="@item.Id">
-                    @item.DisplayOrder
-                </td>
-                <td  class="text-center">
-                    <img src="~/Content/images/uploads/@item.FileName" width="100" height="100"/>
-                    @*@Html.DisplayFor(modelItem => item.FileName)*@
-                </td>
-                <td  class="text-center">
-                    <i class="action activation glyphicon
+
+else
+{
+    <h2>Upload a pic</h2>
+    using (Html.BeginForm("UpLoadImage", "Pic", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+     <input type="hidden" value="@ViewBag.ClubId" id="clubId" name="clubId"/>
+
+     <div class="form-group">
+         <div>
+             <input type="file" name="file" data-input="false" data-buttontext="Select a pic."/>
+             &nbsp;&nbsp;&nbsp;
+         </div>
+         <div>
+             <input type="submit" value="Upload" name="Command" class="btn btn-primary"/>
+         </div>
+     </div>
+ }
+
+if (@Model.Any())
+ {
+     <p>
+         Display order of the images could be changed by dragging and dropping table rows.
+     </p>
+     <table id="pic-table" class="table table-striped">
+         <thead>
+         <tr>
+             <th class="text-center">
+                 Display Order
+             </th>
+             <th class="text-center">
+                 Image
+             </th>
+             <th class="text-center">
+                 Actions
+             </th>
+         </tr>
+         </thead>
+
+         <tbody data-order-url="@Url.Action("UpdateDisplayOrders", "Pic")">
+         @foreach (var item in Model)
+         {
+             <tr>
+                 <td class="index text-center" data-id="@item.Id">
+                     @item.DisplayOrder
+                 </td>
+                 <td class="text-center">
+                     <img src="~/Content/images/uploads/@item.FileName" width="100" height="100"/>
+                     @*@Html.DisplayFor(modelItem => item.FileName)*@
+                 </td>
+                 <td class="text-center">
+                     <i class="action activation glyphicon
                         @(@item.IsActivated ? "glyphicon-ok" : "glyphicon-remove")"
-                       title="@(@item.IsActivated ? "activated" : "deactivated")"
-                            data-id="@item.Id" 
-                            data-activation-url="@Url.Action("ToggleImageActivation", "Pic")"></i>
-                    <i class="action default glyphicon 
+                        title="@(@item.IsActivated ? "activated" : "deactivated")"
+                        data-id="@item.Id"
+                        data-activation-url="@Url.Action("ToggleImageActivation", "Pic")"></i>
+                     <i class="action default glyphicon 
                         @(@item.IsDefault ? "glyphicon-star" : "glyphicon-star-empty")"
-                       title="@(@item.IsDefault ? "cover photo" : "make this cover photo")"
-                            data-id="@item.Id" 
-                            data-default-url="@Url.Action("SetImageAsDefault", "Pic")"></i>
-                    <i class="action delete glyphicon glyphicon glyphicon-trash"
+                        title="@(@item.IsDefault ? "cover photo" : "make this cover photo")"
+                        data-id="@item.Id"
+                        data-default-url="@Url.Action("SetImageAsDefault", "Pic")"></i>
+                     <i class="action delete glyphicon glyphicon glyphicon-trash"
                         data-id="@item.Id" title="remove"
-                            data-delete-url="@Url.Action("DeleteImage", "Pic")"></i>
-                </td>
-            </tr>
-        }
-        </tbody>
-    </table>
+                        data-delete-url="@Url.Action("DeleteImage", "Pic")"></i>
+                 </td>
+             </tr>
+         }
+         </tbody>
+     </table>
+ }
 }
 
 @section scripts{
