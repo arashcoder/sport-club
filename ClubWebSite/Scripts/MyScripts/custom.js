@@ -57,11 +57,13 @@
             cache: false,
             success: function (data) {
                 if (data === 'true') {
-                    current.removeClass('glyphicon-asterisk');
-                    current.addClass('glyphicon-arrow-down');
+                    current.removeClass('glyphicon-remove');
+                    current.addClass('glyphicon-ok');
+                    current.attr('title', 'activated');
                 } else {
-                    current.removeClass('glyphicon-arrow-down');
-                    current.addClass('glyphicon-asterisk');
+                    current.removeClass('glyphicon-ok');
+                    current.addClass('glyphicon-remove');
+                    current.attr('title', 'deactivated');
                 }
                
             }
@@ -78,12 +80,14 @@
             data: { clubId : clubId, picId: pictureId },
             cache: false,
             success: function (data) {
-                $('.glyphicon-bell').each(function(index, item) {
-                    $(item).removeClass('glyphicon-bell');
-                    $(item).addClass('glyphicon-tree-deciduous');
+                $('.glyphicon-star').each(function (index, item) {
+                    $(item).removeClass('glyphicon-star');
+                    $(item).addClass('glyphicon-star-empty');
+                    $(item).attr('title', 'make this cover photo');
                 });
-                current.removeClass('glyphicon-tree-deciduous');
-                current.addClass('glyphicon-bell');
+                current.removeClass('glyphicon-star-empty');
+                current.addClass('glyphicon-star');
+                current.attr('title', 'cover photo');
             }
         });
     });

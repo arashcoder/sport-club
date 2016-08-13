@@ -67,10 +67,9 @@ namespace ClubWebSite.Controllers
         [HttpPost]
         public ActionResult UploadImage(int clubId, HttpPostedFileBase file)
         {
-           // int id = int.Parse(Request.Form["clubId"]);
             if (file == null)
             {
-              //  return View("Index", id).WithError("لطفا ابتدا تصویر را انتخاب کنید.");
+                return RedirectToAction("Index", new { id = clubId });
             }
 
             /*Geting the file name*/
@@ -86,6 +85,7 @@ namespace ClubWebSite.Controllers
                 FileName = filename,
                 DisplayOrder = ++greatestOrder,//greatestOrder.HasValue ? greatestOrder.Value + 1 : 1 ,
                 Club = club,
+                IsActivated = true,
                 IsDefault = club.Pics.Count == 0
             });
 

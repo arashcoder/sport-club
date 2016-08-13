@@ -20,24 +20,38 @@ namespace ClubWebSite.Controllers
             return View(club);
         }
 
-        public ActionResult Create()
+        public ActionResult Save()
         {
-            return View();
+            ClubDbContext dbContext = new ClubDbContext();
+            var club = dbContext.Clubs.FirstOrDefault();
+            return View(club);
         }
 
         [HttpPost]
-        public ActionResult Create(Club club)
+        public ActionResult Save(Club club)
         {
-
-                var newClub = new Club();
+            var newClub = new Club();
+            ClubDbContext dbContext = new ClubDbContext();
+            if (club.Id > 0)
+            {
+                var existingclub = dbContext.Clubs.SingleOrDefault(c => c.Id == club.Id);
+                if (existingclub != null)
+                {
+                    existingclub.Name = club.Name;
+                    existingclub.Address = club.Address;
+                    existingclub.Description = club.Description;
+                }
+            }
+            else
+            {               
                 newClub.Address = club.Address;
                 newClub.Name = club.Name;
-
-               ClubDbContext dbContext = new ClubDbContext();
-            dbContext.Clubs.Add(newClub);
+                newClub.Description = club.Description;
+                dbContext.Clubs.Add(newClub);
+            }
             dbContext.SaveChanges();
            
-            return RedirectToAction("Index", "Pic", new {id = newClub.Id});
+            return RedirectToAction("Index", "Pic", new {id = club.Id>0 ? club.Id : newClub.Id});
         }
 
     }

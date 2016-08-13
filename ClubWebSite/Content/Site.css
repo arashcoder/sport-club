@@ -22,3 +22,100 @@ select,
 textarea {
     max-width: 280px;
 }
+
+/* My custom styles*/
+body {
+    font-size: 17px;
+}
+
+.navbar-inverse {
+    background-color: #ff4342;
+    border-color: #ff4342;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+    color: #fff;
+}
+
+.navbar-inverse .navbar-brand {
+    color: #fff;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-control {
+    font-size: 17px;
+    padding: 20px 15px;
+    border-radius: 9px;
+}
+
+.btn {
+    font-size: 17px;
+    padding: 7px 20px;
+    border-radius: 9px;
+}
+
+.action {
+     cursor: pointer;
+    font-size: 30px;
+    margin-right: 10px;
+}
+
+.glyphicon-remove {
+    color: orange;
+}
+
+.glyphicon-ok {
+    color: green;
+}
+
+.glyphicon-star {
+    color: blue;
+}
+
+.glyphicon-trash {
+    color: red;
+}
+
+.img-default {
+    width: 700px;
+    height: 700px;
+    display: block;
+    margin: 0 auto;
+}
+
+.div-img {
+    margin-top: 40px;
+}
+
+.img-list {
+      width: 200px;
+    height: 200px;
+    margin: 0 10px 10px 0;
+}
+
+.desc {
+    margin: 30px 0;
+}
+
+.address {
+    margin-bottom: 30px;
+}
+
+/*.activation {
+    cursor: pointer;
+    font-size: 30px;
+}
+
+.default {
+    cursor: pointer;
+    font-size: 30px;  
+}
+
+.delete {
+     cursor: pointer;
+    font-size: 30px; 
+}*/
+
