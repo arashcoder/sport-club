@@ -164,8 +164,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Config.cs" />
-    <Compile Include="Helpers\Constants.cs" />
-    <Compile Include="Helpers\Helper.cs" />
     <Compile Include="Models\Club.cs" />
     <Compile Include="Models\Pic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -210,10 +208,7 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Club\Index.cshtml" />
     <Content Include="Views\Club\Save.cshtml" />
     <Content Include="Views\Pic\Index.cshtml" />
   </ItemGroup>

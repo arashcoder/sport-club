@@ -4,17 +4,21 @@
         var $originals = tr.children();
         var $helper = tr.clone();
         $helper.children().each(function (index) {
-            $(this).width($originals.eq(index).width())
+            $(this).width($originals.eq(index).width());// updates displayorder column's text to reflect the new display order of the images.
         });
         return $helper;
     },
     updateIndex = function (e, ui) {
+        /**
+         * Called when user drops the table row. It creates two arrays: one containing the id of the rows, and
+         * one for the display order. It then sends these via ajax to the server.
+         */
         var ids = [];
         var orders = [];
         $('td.index', ui.item.parent()).each(function (i) {
             $(this).html(i + 1);
-            ids.push($(this).data('id'));
-            orders.push(i + 1);
+            ids.push($(this).data('id'));// gets the id of the row.
+            orders.push(i + 1); // gets the display order of the row.
         });
 
 
@@ -26,13 +30,12 @@
         });
     };
 
-    $("#pic-table tbody").sortable({
+    $("#pic-table tbody").sortable({//uses jquery sortable plugin for dragging and dropping table rows. Used for changing display order of the images.
         helper: fixHelperModified,
         stop: updateIndex
     }).disableSelection();
 
     $('.delete').on('click', function (pos, item) {
-      //  var clubId = $('#clubId').val();
         var pictureId = $(this).data('id');
         var tr = $(this).parent().parent();// gets the current tr. Used for removing the row after successful deletion.
         $.ajax({
@@ -47,7 +50,9 @@
     });
 
     $('.activation').on('click', function (pos, item) {
-        //  var clubId = $('#clubId').val();
+        /**
+         * Is called for toggling the activation of the image.
+         */
         var pictureId = $(this).data('id');
         var current = $(this);
         $.ajax({
@@ -71,6 +76,9 @@
     });
 
     $('.default').on('click', function (pos, item) {
+        /**
+         * /Is called for setting an image as the cover photo.
+         */
          var clubId = $('#clubId').val();
         var pictureId = $(this).data('id');
         var current = $(this);

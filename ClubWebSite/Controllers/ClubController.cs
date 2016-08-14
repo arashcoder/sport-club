@@ -14,7 +14,7 @@ namespace ClubWebSite.Controllers
     {
      
         public ActionResult Save()
-        {
+        {          
             ClubDbContext dbContext = new ClubDbContext();
             var club = dbContext.Clubs.FirstOrDefault();
             return View(club);
@@ -23,8 +23,9 @@ namespace ClubWebSite.Controllers
         [HttpPost]
         public ActionResult Save(Club club)
         {
-          
-                var newClub = new Club();
+            /*this method is used for both creating and editing a club.
+              If a club does not exist, it creates one, otherwise it updates the existing club.*/
+            var newClub = new Club();
                 ClubDbContext dbContext = new ClubDbContext();
                 if (club.Id > 0)
                 {

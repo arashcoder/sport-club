@@ -27,19 +27,9 @@ else
             <i class="glyphicon glyphicon-map-marker"></i>
             @Model.Address
         </div>
-        @*<p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>*@
     </div>
 
-    @*<h2 class="text-center">
-            Welcome To Club @Model.Name
-        </h2>
-        <div class="desc">
-            @Model.Description
-        </div>
-        <div class="address">
-            <i class="glyphicon glyphicon-map-marker"></i>
-            @Model.Address
-        </div>*@
+  
     if (@Model.Pics.SingleOrDefault(p => p.IsDefault) != null)
     {
         <div>

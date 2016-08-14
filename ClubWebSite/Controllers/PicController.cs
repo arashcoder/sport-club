@@ -19,6 +19,7 @@ namespace ClubWebSite.Controllers
             var club = dbContext.Clubs.FirstOrDefault();
             if (club == null)
             {
+                /*If a club does not exist, user is prompted to create one.*/
                 ViewBag.ClubId = 0;
                 return View(new List<Pic>());
             }
@@ -44,9 +45,10 @@ namespace ClubWebSite.Controllers
         [HttpPost]
         public ActionResult SetImageAsDefault(int clubId, int picId)
         {
+            /*Sets the image as the cover image.*/
             ClubDbContext dbContext = new ClubDbContext();
             var pics = GetPics(dbContext, clubId);
-            pics.ForEach(p => p.IsDefault = false);
+            pics.ForEach(p => p.IsDefault = false);//Remove default image.
             var pic = GetPicById(dbContext, picId);
             pic.IsDefault = true;
             dbContext.SaveChanges();
@@ -56,10 +58,8 @@ namespace ClubWebSite.Controllers
         [HttpPost]
         public ActionResult DeleteImage(int picId)
         {
-            // var allPics = GetPics(clubId);
             ClubDbContext dbContext = new ClubDbContext();
             var pic = GetPicById(dbContext, picId);
-            //allPics.Remove(pic);
             if (pic != null)
             {               
                 dbContext.Pics.Remove(pic);
@@ -76,9 +76,11 @@ namespace ClubWebSite.Controllers
         [HttpPost]
         public ActionResult UploadImage(int clubId, HttpPostedFileBase file)
         {
+            ClubDbContext dbContext = new ClubDbContext();
+            var club = dbContext.Clubs.SingleOrDefault(c => c.Id == clubId);
             if (file == null)
             {
-                return RedirectToAction("Index", new { id = clubId });
+                return RedirectToAction("Index");
             }
 
             /*Geting the file name*/
@@ -86,13 +88,13 @@ namespace ClubWebSite.Controllers
             /*Saving the file in server folder*/
             file.SaveAs(Server.MapPath(Config.ImageUploadPath + filename));
 
-            ClubDbContext dbContext = new ClubDbContext();
-            var club = dbContext.Clubs.SingleOrDefault(c => c.Id == clubId);
-            int greatestOrder = club.Pics.Count > 0 ? club.Pics.Max(m => m.DisplayOrder) : 0;            
+           
+            
+            int greatestOrder = club.Pics.Count > 0 ? club.Pics.Max(m => m.DisplayOrder) : 0;  //gets the max display order.      
             club.Pics.Add(new Pic
             {
                 FileName = filename,
-                DisplayOrder = ++greatestOrder,//greatestOrder.HasValue ? greatestOrder.Value + 1 : 1 ,
+                DisplayOrder = ++greatestOrder,
                 Club = club,
                 IsActivated = true,
                 IsDefault = club.Pics.Count == 0
@@ -100,12 +102,14 @@ namespace ClubWebSite.Controllers
 
             dbContext.SaveChanges();
 
-            return RedirectToAction("Index", new {id = clubId });
+            return RedirectToAction("Index"); 
         }
 
         [HttpPost]
         public ActionResult UpdateDisplayOrders(int clubId, int[] idList, int[] orderList)
         {
+            /*Called when user changes the order of the image rows by drag & drop.
+             For each id in idList, its order is stored in corresponding index in orderList.*/
             ClubDbContext dbContext = new ClubDbContext();
             var pics = GetPics(dbContext, clubId);
             for (int i = 0; i < idList.Length; i++)
